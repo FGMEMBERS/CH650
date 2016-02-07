@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <path>panel.ac</path>
+<model><path>screens.ac</path></model>
+
+<!--Throttle-->
+ <animation>
+   <type>translate</type>
+   <object-name>throttle1</object-name>
+   <property>controls/engines/engine[0]/throttle</property>
+   <interpolation>
+     <entry><ind> 0 </ind><dep>  0.00 </dep></entry>
+     <entry><ind> 1 </ind><dep> -0.08 </dep></entry>
+   </interpolation>
+   <axis>
+    <x> 1 </x>
+    <y> 0 </y>
+    <z> 0 </z>
+   </axis>
+  </animation>
+ <animation>
+   <type>translate</type>
+   <object-name>throttle2</object-name>
+   <property>controls/engines/engine[0]/throttle</property>
+   <interpolation>
+     <entry><ind> 0 </ind><dep>  0.00 </dep></entry>
+     <entry><ind> 1 </ind><dep> -0.005 </dep></entry>
+   </interpolation>
+   <axis>
+    <x> 1 </x>
+    <y> 0 </y>
+    <z> 0 </z>
+   </axis>
+  </animation>
+<!--Mixture-->
+ <animation>
+   <type>translate</type>
+   <object-name>mixture</object-name>
+   <property>controls/engines/engine[0]/mixture</property>
+   <interpolation>
+     <entry><ind> 0 </ind><dep>  0.00 </dep></entry>
+     <entry><ind> 1 </ind><dep> -0.08 </dep></entry>
+   </interpolation>
+   <axis>
+    <x> 1 </x>
+    <y> 0 </y>
+    <z> 0 </z>
+   </axis>
+  </animation>
+
+<!--Magneto Switch-->
+<animation>
+  <type>rotate</type>
+  <object-name>magnetoswitch</object-name>
+  <object-name>Ignition</object-name>
+  <property>/controls/engines/engine/magnetos</property>
+  <factor>30</factor>
+  <center>
+   <x-m>-0.69857</x-m>
+   <y-m>-0.36634</y-m>
+   <z-m>0.03962</z-m>
+  </center>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<!--Fuel valve-->
+  <animation>
+   <type>pick</type>
+   <object-name>fuelvalv</object-name>
+   <action>
+     <name>decrease mags: click</name>
+     <button>0</button>
+     <binding>
+       <condition>
+         <not><property>controls/fuel/selected-tank-lock</property></not>
+       </condition>
+       <command>property-adjust</command>
+       <property>controls/fuel/selected-tank</property>
+       <step>1</step>
+       <min>-1</min>
+       <max>2</max>
+       <wrap>true</wrap>
+     </binding>
+     <binding>
+       <condition>
+         <not><property>controls/fuel/selected-tank-lock</property></not>
+       </condition>
+       <command>property-toggle</command>
+       <property>sim/sounds/click</property>
+     </binding>
+   </action>
+   <action>
+     <name>decrease mags: scroll</name>
+     <button>3</button>
+     <binding>
+       <condition>
+         <not><property>controls/fuel/selected-tank-lock</property></not>
+       </condition>
+       <command>property-adjust</command>
+       <property>controls/fuel/selected-tank</property>
+       <step>1</step>
+       <min>-1</min>
+       <max>2</max>
+       <wrap>true</wrap>
+     </binding>
+     <binding>
+       <condition>
+         <not><property>controls/fuel/selected-tank-lock</property></not>
+       </condition>
+       <command>property-toggle</command>
+       <property>sim/model/click</property>
+     </binding>
+   </action>
+   <action>
+     <name>increase mags: scroll</name>
+     <button>4</button>
+     <binding>
+       <condition>
+         <not><property>controls/fuel/selected-tank-lock</property></not>
+       </condition>
+       <command>property-adjust</command>
+       <property>controls/fuel/selected-tank</property>
+       <step>-1</step>
+       <min>-1</min>
+       <max>2</max>
+       <wrap>true</wrap>
+     </binding>
+     <binding>
+       <condition>
+         <not><property>controls/fuel/selected-tank-lock</property></not>
+       </condition>
+       <command>property-toggle</command>
+       <property>sim/model/click</property>
+     </binding>
+   </action>
+   <hovered>
+     <binding>
+       <command>set-tooltip</command>
+       <tooltip-id>tank-selector</tooltip-id>
+       <label>Tank: %s</label>
+       <property>controls/fuel/selected-tank</property>
+       <mapping>nasal</mapping>
+       <script>
+         var m = getprop('controls/fuel/selected-tank');
+         if (m == 0) return 'LEFT';
+         if (m == 1) return 'RIGHT';
+         return 'CLOSED';
+       </script>
+     </binding>
+   </hovered>
+  </animation>
+
+ <animation>
+    <type>pick</type>
+    <object-name>fuelvalvelock</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/fuel/selected-tank-lock</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+  <animation>
+    <type>translate</type>
+    <object-name>fuelvalvelock</object-name>
+        <property>controls/fuel/selected-tank-lock</property>
+ <factor>-0.001</factor>
+    <axis>
+      <x>  1 </x>
+      <y> 0 </y>
+      <z>  0.35 </z>
+    </axis>
+  </animation>
+  <animation>
+    <type>rotate</type>
+    <object-name>fuelvalv</object-name>
+    <property>controls/fuel/selected-tank</property>
+
+    <interpolation>
+      <entry><ind> -1 </ind><dep> 0 </dep></entry>
+      <entry><ind>  0 </ind><dep>   -90 </dep></entry>
+      <entry><ind>  1 </ind><dep>  -270 </dep></entry>
+    </interpolation>
+    <center>
+      <x-m> -0.64927</x-m>
+      <z-m>-0.16735 </z-m>
+    </center>
+    <axis>
+      <x>  1 </x>
+      <y> 0 </y>
+      <z>  0.35 </z>
+    </axis>
+  </animation>
+<!--SWITCHES-->
+<!--Alternator switch-->
+ <animation>
+    <type>pick</type>
+    <object-name>alt</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/engines/engine/master-alt</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>alt</object-name>
+    <property>controls/engines/engine/master-alt-pos</property>
+    <factor> 40 </factor>
+    <center>
+      <x-m> -0.72327 </x-m>
+      <z-m>0.09607 </z-m>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y> -1 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+<!--Master Switch-->
+
+ <animation>
+    <type>pick</type>
+    <object-name>master</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/engines/engine/master-bat</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>master</object-name>
+    <property>controls/engines/engine/master-bat-pos</property>
+    <factor> 40 </factor>
+<center>
+      <x-m> -0.72327 </x-m>
+      <z-m>0.09607 </z-m>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y> -1 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+<!--Radio Master Switch-->
+
+ <animation>
+    <type>pick</type>
+    <object-name>radio</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/electric/radio-master</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>radio</object-name>
+        <property>controls/electric/radio-master</property>
+    <factor> 25 </factor>
+    <center>
+      <x-m> -0.71637 </x-m>
+      <z-m> 0.01666</z-m>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y> -1 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+
+<!--Landing Light Switch-->
+<animation>
+    <type>pick</type>
+    <object-name>landinglight</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/lighting/landing-lights</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>landinglight</object-name>
+        <property>controls/lighting/landing-lights-pos</property>
+    <factor> 25 </factor>
+    <center>
+      <x-m> -0.71637 </x-m>
+      <z-m> 0.01666</z-m>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y> -1 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+<!--Taxi Light Switch-->
+<animation>
+    <type>pick</type>
+    <object-name>taxilight</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/lighting/taxi-lights</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>taxilight</object-name>
+        <property>controls/lighting/taxi-lights-pos</property>
+    <factor> 25 </factor>
+    <center>
+      <x-m> -0.71637 </x-m>
+      <z-m> 0.01666</z-m>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y> -1 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+<!--Strobe Light Switch-->
+<animation>
+    <type>pick</type>
+    <object-name>strobelight</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/lighting/beacon</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>strobelight</object-name>
+        <property>controls/lighting/beacon-pos</property>
+    <factor> 25 </factor>
+    <center>
+      <x-m> -0.71637 </x-m>
+      <z-m> 0.01666</z-m>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y> -1 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+<!---Navigation Light Switch-->
+<animation>
+    <type>pick</type>
+    <object-name>navlight</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/lighting/nav-lights</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>navlight</object-name>
+        <property>controls/lighting/nav-lights-pos</property>
+    <factor> 25 </factor>
+    <center>
+      <x-m> -0.71637 </x-m>
+      <z-m> 0.01666</z-m>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y> -1 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+<!---Fuel Pump Switch-->
+<animation>
+    <type>pick</type>
+    <object-name>boostpump</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>/controls/engines/engine/fuel-pump</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>boostpump</object-name>
+        <property>/controls/engines/engine/fuel-pump-pos</property>
+    <factor> 25 </factor>
+    <center>
+      <x-m> -0.71637 </x-m>
+      <z-m> 0.01666</z-m>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y> -1 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+
+
+<!--Flap switch-->
+  <animation>
+    <type>pick</type>
+    <object-name>flaps</object-name>
+    <action>
+      <button>1</button>
+      <repeatable>true</repeatable>
+      <binding>
+        <command>property-adjust</command>
+        <property>controls/flight/flaps</property>
+        <step type="double">-0.05</step>
+      </binding>
+      <binding>
+        <command>property-assign</command>
+        <property>controls/flight/flaps-anim</property>
+        <value type="int">1</value>
+      </binding>          
+      <mod-up>
+        <binding>
+          <command>property-assign</command>
+          <property>controls/flight/flaps-anim</property>
+          <value type="int">0</value>
+        </binding>          
+      </mod-up>
+    </action>
+  </animation>
+
+  <animation>
+    <type>pick</type>
+    <object-name>flaps</object-name>
+    <action>
+      <button>0</button>
+      <repeatable>true</repeatable>
+      <binding>
+        <command>property-adjust</command>
+        <property>controls/flight/flaps</property>
+        <step type="double">0.05</step>
+      </binding>
+      <binding>
+        <command>property-assign</command>
+        <property>controls/flight/flaps-anim</property>
+        <value type="int">-1</value>
+      </binding>          
+      <mod-up>
+        <binding>
+          <command>property-assign</command>
+          <property>controls/flight/flaps-anim</property>
+          <value type="int">0</value>
+        </binding>          
+      </mod-up>
+    </action>
+  </animation>
+ <animation>
+    <type>translate</type>
+    <object-name>Trim switch.001</object-name>
+    <property>controls/flight/flaps</property>
+<factor>-0.01</factor>
+    <axis>
+      <x> 0 </x>
+      <y> 0 </y>
+      <z> 1 </z>
+    </axis>
+  </animation>
+  <animation>
+    <type>rotate</type>
+    <object-name>flaps</object-name>
+    <property>controls/flight/flaps-anim</property>
+    <interpolation>
+      <entry><ind> -1 </ind><dep> 10 </dep></entry>
+      <entry><ind>  0 </ind><dep>   0 </dep></entry>
+      <entry><ind>  1 </ind><dep>  -10 </dep></entry>
+    </interpolation>
+  <center>
+   <x-m>-0.71725</x-m>
+   <z-m>0.02388</z-m>
+  </center>
+    <axis>
+      <x> 0 </x>
+      <y> 1 </y>
+      <z> 0 </z>
+    </axis>
+  </animation>
+<!--Carburator Heat-->
+
+ <animation>
+    <type>pick</type>
+    <object-name>carburatorheat</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/heating/carb</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>translate</type>
+    <object-name>carburatorheat</object-name>
+    <property>controls/heating/carb-pos</property>
+    <factor>0.03 </factor>
+    <axis>
+      <x>  1 </x>
+      <y> 0 </y>
+      <z>  0.0 </z>
+    </axis>
+  </animation>
+
+<!--Cabin Heat-->
+<animation>
+    <type>pick</type>
+    <object-name>cabinheat</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/heating/cabin</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>translate</type>
+    <object-name>cabinheat</object-name>
+        <property>controls/heating/cabin-pos</property>
+    <factor>0.03 </factor>
+    <axis>
+      <x>  1 </x>
+      <y> 0 </y>
+      <z>  0.0 </z>
+    </axis>
+  </animation>
+<!--Parking Brake-->
+
+ <animation>
+    <type>pick</type>
+    <object-name>parkbrake</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/gear/brake-parking</property>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+
+  <animation>
+    <type>translate</type>
+    <object-name>parkbrake</object-name>
+    <property>controls/gear/brake-parking-pos</property>
+    <factor>0.03 </factor>
+    <axis>
+      <x>  1 </x>
+      <y> 0 </y>
+      <z>  0.35 </z>
+    </axis>
+  </animation>
+
+<!--We use the kt76a from Instruments-3d instead of the Garmin for the moment -->
+<model><path>Aircraft/Instruments-3d/kt76a/kt76a.xml</path>
+    <offsets>
+      <x-m>-0.72149 </x-m>
+      <y-m> -0.22204 </y-m>
+      <z-m>0.01995 </z-m>
+    </offsets></model>
+</PropertyList>
+

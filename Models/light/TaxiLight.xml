@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <path>light-cone.ac</path>
+ <model> <path>WhiteLight.xml</path></model>
+
+  <effect>
+    <inherits-from>Effects/light-cone</inherits-from>
+    <object-name>Cone</object-name>
+  </effect>
+
+<animation>
+<type>select</type>
+    <object-name>Cone</object-name>
+    <object-name>Cone-texture</object-name>
+    <object-name>light</object-name>
+    <object-name>Light</object-name>
+<condition>
+      <property>/controls/engines/engine/master-bat</property>
+      <property>/controls/lighting/taxi-lights</property>
+</condition>
+</animation>
+</PropertyList>

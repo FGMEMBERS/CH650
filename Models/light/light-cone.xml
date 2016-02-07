@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <path>light-cone.ac</path>
+ <model> <path>WhiteLight.xml</path></model>
+
+  <effect>
+    <inherits-from>Effects/light-cone</inherits-from>
+    <object-name>Cone</object-name>
+  </effect>
+  
+ </PropertyList>
