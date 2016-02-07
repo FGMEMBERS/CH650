@@ -210,6 +210,17 @@
     <action>
       <button>0</button>
       <binding>
+        <command>nasal</command>
+        <script>if(getprop("/controls/engines/engine/master-alt")== 0){
+setprop("/instrumentation/dynon-efis/loading-screen", 1);
+interpolate("/instrumentation/dynon-efis/ready", 1, 5);
+}else{
+setprop("/instrumentation/dynon-efis/loading-screen", 1);
+interpolate("/instrumentation/dynon-efis/ready", 0, 5);
+}
+</script>
+      </binding>
+      <binding>
         <command>property-toggle</command>
         <property>controls/engines/engine/master-alt</property>
       </binding>
@@ -641,5 +652,174 @@
       <y-m> -0.22204 </y-m>
       <z-m>0.01995 </z-m>
     </offsets></model>
+
+
+<!--Simulating the Dynon D180-->
+<!--Off and loading screens-->
+<animation>
+<type>select</type>
+<object-name>dynon_screenoff</object-name>
+<object-name>dynonscreenoff2</object-name>
+<condition><or><not>
+<property>/instrumentation/dynon-efis/loading-screen</property>
+</not><and>
+<property>/instrumentation/dynon-efis/loading-screen</property>
+<not>
+<property>/instrumentation/dynon-efis/ready</property>
+</not>
+</and></or>
+</condition>
+</animation>
+<animation>
+<type>select</type>
+<object-name>dynon_screenloading</object-name>
+<object-name>dynon_screenloading2</object-name>
+<condition>
+<property>/instrumentation/dynon-efis/loading-screen</property>
+<less-than>
+<property>/instrumentation/dynon-efis/ready</property>
+<value>1</value>
+</less-than>
+</condition>
+</animation>
+<!--Softkeys-->
+<!--right-->
+ <animation>
+    <type>pick</type>
+    <object-name>Dynon D180 but6</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-cycle</command>
+        <property>/instrumentation/dynon-efis/sideviews</property>
+	<value>eng</value>
+	<value>oattrim</value>
+	<value>fuel</value>
+	<value>time</value>
+	<value>hsi</value>
+      </binding>
+      <binding>
+          <command>property-toggle</command>
+          <property>sim/model/sound/click</property>
+      </binding>
+    </action>
+  </animation>
+<!--HSI sideview-->
+
+<animation>
+<type>select</type>
+<object-name>hsi</object-name>
+<condition><equals>
+<property>/instrumentation/dynon-efis/sideviews</property>
+<value>hsi</value>
+</equals>
+</condition>
+</animation>
+
+<animation>
+  <type>texrotate</type>
+<object-name>hsi</object-name>
+<property>/orientation/heading-deg</property>
+    <center>
+      <x> 0.5 </x>
+      <y> 0.5 </y>
+    </center>
+    <axis>
+      <x>  0 </x>
+      <y>  0 </y>
+      <z> -1 </z>
+    </axis>
+</animation>
+<animation>
+<type>texmultiple</type>
+<object-name>dynonscreen1</object-name>
+<object-name>dynonscreen2</object-name>
+<transform>
+  <subtype>texrotate</subtype>
+<property>/orientation/roll-deg</property>
+      <min> -180 </min>
+      <max>  180 </max>
+      <center>
+        <x> 0.5 </x>
+        <y> 0.5 </y>
+      </center>
+      <axis>
+        <x>  0 </x>
+        <y>  0 </y>
+        <z> -1 </z>
+      </axis>
+</transform>
+    <transform>
+      <subtype>textranslate</subtype>
+      <property>/instrumentation/attitude-indicator/indicated-pitch-deg</property>
+      <factor> 0.005 </factor>
+      <center>
+        <x> 0.5 </x>
+        <y> 0.5 </y>
+      </center>
+      <axis>
+        <x> 0 </x>
+        <y> 1 </y>
+        <z> 0 </z>
+      </axis>
+    </transform>
+</animation>
+<animation>
+<type>textranslate</type>
+<object-name>hi</object-name>
+<object-name>hi2</object-name>
+<property>/orientation/heading-deg</property>
+<factor>0.002775</factor>
+      <axis>
+        <x>  1 </x>
+        <y>  0 </y>
+        <z> 0 </z>
+      </axis>
+</animation>
+
+<animation>
+<type>textranslate</type>
+<object-name>asi.tape</object-name>
+<object-name>asi.tape2</object-name>
+<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+<factor>0.0025</factor>
+      <axis>
+        <x>  0 </x>
+        <y>  1 </y>
+        <z> 0 </z>
+      </axis>
+</animation><animation>
+<type>textranslate</type>
+<object-name>alt.tape</object-name>
+<object-name>alt.tape2</object-name>
+<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+<factor>0.0000437</factor>
+      <axis>
+        <x>  0 </x>
+        <y>  1 </y>
+        <z> 0 </z>
+      </axis>
+</animation>
+<!--OSG text-->
+
+ <!-- <panel>
+    <path>Aircraft/CH650/Models/Interior/Panel/dynon-text.xml</path>
+    <bottom-left>
+      <x-m> -0.72121</x-m>
+      <y-m> -0.30224</y-m>
+      <z-m> 0.07052 </z-m>
+    </bottom-left>
+    <bottom-right>
+      <x-m>  -0.72121 </x-m>
+      <y-m>  -0.14929</y-m>
+      <z-m> 0.07052</z-m>
+    </bottom-right>
+    <top-left>
+      <x-m>  -0.72121 </x-m>
+      <y-m> -0.30247 </y-m>
+      <z-m> 0.15674</z-m>
+    </top-left>
+  </panel>-->
+
 </PropertyList>
 

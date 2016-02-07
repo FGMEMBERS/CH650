@@ -236,6 +236,17 @@
       <z> 0 </z>
     </axis>
   </animation>
+<!--Pilot/Copilot visibility-->
+<animation>
+    <type>select</type>
+    <object-name>Pilot</object-name><condition><not><equals>
+    <property>/sim/current-view/view-number</property><value>0</value></equals></not></condition>
+  </animation>
 
+<animation>
+    <type>select</type>
+    <object-name>Pilot.001</object-name><condition><not><equals>
+    <property>/sim/current-view/view-number</property><value>8</value></equals></not></condition>
+  </animation>
 </PropertyList>
 
