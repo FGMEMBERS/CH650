@@ -4,7 +4,7 @@
 
  <path>ch650.ac</path>
  <model><path>glasses.ac</path></model>
-
+ 
   <nasal>
     <load>
       var livery_update = aircraft.livery_update.new("Aircraft/CH750STOL/Models/Liveries", 10);

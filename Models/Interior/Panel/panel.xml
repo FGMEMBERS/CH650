@@ -3,6 +3,11 @@
 <PropertyList>
 
   <path>panel.ac</path>
+  
+   <effect>
+   <inherits-from>Aircraft/CH650/Models/Effects/interior/interior-shadow</inherits-from>
+   <object-name>Panel</object-name>
+ </effect>
 <model><path>Dynon_D180/d180.xml</path></model>
 <!--Throttle-->
  <animation>
